@@ -1,4 +1,5 @@
 const express = require('express');
+// const app = require('../app');
 
 const router = express.Router();
 const productsService = require('../services/productsService');
@@ -19,5 +20,16 @@ router.get('/products/:id', async (req, res) => {
     }
 });
 
+const postProductsController = async (req, res) => {
+    const { name, quantity } = req.body;
+    
+    const objectAdded = await productsService.add({ name, quantity });
+
+    if (!objectAdded) {
+        return res.status(409).json({ message: 'Product already exists' });
+    }
+    return res.status(201).json(objectAdded);
+};
+
 const productsRouter = router;
-module.exports = { productsRouter };
+module.exports = { productsRouter, postProductsController };
