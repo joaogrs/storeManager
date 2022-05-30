@@ -17,7 +17,6 @@ const isValid = async (name) => {
 const add = async ({ name, quantity }) => {
     const [data] = await productsModel.getAll();
     const verifyName = await isValid(name);
-    console.log(verifyName);
     if (!verifyName) return false;
 
     await productsModel.add({ name, quantity });

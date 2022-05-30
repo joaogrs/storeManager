@@ -1,15 +1,11 @@
-const express = require('express');
-// const app = require('../app');
-
-const router = express.Router();
 const productsService = require('../services/productsService');
 
-router.get('/products', async (req, res) => {
+const getProductsController = async (req, res) => {
     const [data] = await productsService.getAll();
     res.status(200).json(data);
-});
+};
 
-router.get('/products/:id', async (req, res) => {
+const getProductsIdController = async (req, res) => {
     const { id } = req.params;
     try {
         const [data] = await productsService.getAll(id);
@@ -18,7 +14,7 @@ router.get('/products/:id', async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: 'Product not found' });
     }
-});
+};
 
 const postProductsController = async (req, res) => {
     const { name, quantity } = req.body;
@@ -31,5 +27,7 @@ const postProductsController = async (req, res) => {
     return res.status(201).json(objectAdded);
 };
 
-const productsRouter = router;
-module.exports = { productsRouter, postProductsController };
+module.exports = { 
+    postProductsController,
+    getProductsController,
+    getProductsIdController };

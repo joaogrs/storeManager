@@ -1,14 +1,11 @@
-const express = require('express');
-
-const router = express.Router();
 const salesService = require('../services/salesService');
 
-router.get('/sales', async (req, res) => {
+const getSalesController = async (req, res) => {
     const [data] = await salesService.getAll();
     res.status(200).json(data);
-});
+};
 
-router.get('/sales/:id', async (req, res) => {
+const getSalesByIdController = async (req, res) => {
     const { id } = req.params;
     try {
         const [data] = await salesService.getAll(id);
@@ -17,7 +14,9 @@ router.get('/sales/:id', async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: 'Sale not found' });
     }
-});
+};
 
-const salesRouter = router;
-module.exports = { salesRouter };
+module.exports = {
+    getSalesController,
+    getSalesByIdController,
+ };
