@@ -6,7 +6,7 @@ const productDTO = Joi.object({
 }).messages({
     'any.required': '{{#label}} is required',
     'string.min': '{{#label}} length must be at least 5 characters long', 
-    'number.min': '{{#label}} must be greater than or equal to 1"',
+    'number.min': '{{#label}} must be greater than or equal to 1',
 });
 
 const validationProductsMiddleware = (req, res, next) => {
@@ -14,8 +14,9 @@ const validationProductsMiddleware = (req, res, next) => {
     if (!error) {
         return next();
     }
-    const message = error.details.map((e) => e.message);
-    return res.status(400).json(message);
+    const [message] = error.details.map((e) => e.message);
+    if (message.includes('required')) return res.status(400).json({ message });
+    return res.status(422).json({ message });
 };
 
 module.exports = { validationProductsMiddleware };
