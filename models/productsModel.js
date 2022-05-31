@@ -9,4 +9,7 @@ const add = ({ name, quantity }) => conect.execute(`INSERT INTO StoreManager.pro
 (name, quantity) VALUES(?, ?)`,
  [name, quantity]);
 
-module.exports = { getAll, getById, add };
+const uptade = (id, { name, quantity }) => conect.execute(`UPDATE StoreManager.products SET 
+name = ?, quantity = ? WHERE id = ?`, [name, quantity, id]);
+
+module.exports = { getAll, getById, add, uptade };

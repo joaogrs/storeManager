@@ -26,4 +26,9 @@ const add = async ({ name, quantity }) => {
     return { id: newId, name, quantity };
 };
 
-module.exports = { getAll, add };
+const uptate = async (id, { name, quantity }) => {
+    await productsModel.uptade(id, { name, quantity });
+    return { id, name, quantity };
+};
+
+module.exports = { getAll, add, uptate };
