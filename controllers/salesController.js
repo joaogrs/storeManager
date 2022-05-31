@@ -16,7 +16,13 @@ const getSalesByIdController = async (req, res) => {
     }
 };
 
+const postSalesController = async (req, res) => {
+    const objectPosted = await salesService.add(req.body);
+    res.status(201).json(objectPosted);
+};
+
 module.exports = {
     getSalesController,
     getSalesByIdController,
+    postSalesController,
  };

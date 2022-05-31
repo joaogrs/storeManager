@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const salesDTO = Joi.object({
+const salesDTO = Joi.array().items({
     productId: Joi.number().required(),
     quantity: Joi.number().min(1).required(),
 }).messages({
