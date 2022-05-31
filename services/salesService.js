@@ -8,11 +8,6 @@ const getAll = (id = null) => {
 };
 
 const add = async (arrayForPost) => {
-    // const [data] = await salesModel.getAll();
-   // const lastInfos = data[data.length - 1];
-   // const { saleId } = lastInfos;
-   // const newId = saleId + 1;
-    
     const newId = await salesModel.addNewSaleId();
     
     const promisePostObjects = [];
@@ -26,4 +21,16 @@ const add = async (arrayForPost) => {
     return { id: newId, itemsSold };
 };
 
-module.exports = { getAll, add };
+const update = async (id, arrayForUpdate) => {
+    const itemUpdated = [];
+    const promiseUpdateObjects = [];
+    arrayForUpdate.forEach(async (sale) => {
+        const { productId, quantity } = sale;
+        promiseUpdateObjects.push(salesModel.update(id, productId, quantity));
+        return itemUpdated.push(sale);
+    });
+    await Promise.all(promiseUpdateObjects);
+    return { saleId: id, itemUpdated };
+};
+
+module.exports = { getAll, add, update };

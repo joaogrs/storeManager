@@ -1,3 +1,4 @@
+const res = require("express/lib/response");
 const frisby = require("frisby");
 const mysql = require("mysql2/promise");
 const restoreDb = require("./restoreDb");
@@ -40,6 +41,7 @@ describe("08-updateSales", () => {
         .expect("status", 200)
         .then((response) => {
           const { json } = response;
+          console.log(json)
 
           expect(json).toHaveProperty("saleId");
           expect(json).toHaveProperty("itemUpdated");
