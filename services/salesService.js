@@ -33,4 +33,8 @@ const update = async (id, arrayForUpdate) => {
     return { saleId: id, itemUpdated };
 };
 
-module.exports = { getAll, add, update };
+const deleteById = async (id) => {
+    await salesModel.deleteById(id);
+};
+
+module.exports = { getAll, add, update, deleteById };

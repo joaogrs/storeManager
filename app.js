@@ -7,6 +7,7 @@ const {
   getSalesByIdController,
   postSalesController,
   putSalesController,
+  deleteSalesController,
 } = require('./controllers/salesController');
 const { validationProductsMiddleware } = require('./middlewares/products.middleware');
 const { validationSalesMiddleware } = require('./middlewares/sales.middleware');
@@ -34,6 +35,7 @@ app.get('/sales', getSalesController);
 app.get('/sales/:id', getSalesByIdController);
 app.post('/sales', validationSalesMiddleware, postSalesController);
 app.put('/sales/:id', validationSalesMiddleware, putSalesController);
+app.delete('/sales/:id', deleteSalesController);
 
 // não remova essa exportação, é para o avaliador funcionar
 // você pode registrar suas rotas normalmente, como o exemplo acima

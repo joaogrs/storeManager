@@ -36,9 +36,22 @@ const putSalesController = async (req, res) => {
     }
 };
 
+const deleteSalesController = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [data] = await salesService.getAll(id);
+        if (data.length === 0) throw Error;
+        await salesService.deleteById(id);
+        res.status(204).send();
+    } catch (error) {
+        res.status(404).json({ message: 'Sale not found' });
+    }
+};
+
 module.exports = {
     getSalesController,
     getSalesByIdController,
     postSalesController,
     putSalesController,
+    deleteSalesController,
  };

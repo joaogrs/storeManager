@@ -1,4 +1,3 @@
-const conection = require('../db/storeManager');
 const connection = require('../db/storeManager');
 
 const getAll = () => connection.execute(`SELECT sp.sale_id as saleId, s.date, sp.product_id as
@@ -22,9 +21,16 @@ const addNewProductSold = (id, { productId, quantity }) => {
 };
 
 const update = (id, productId, quantity) => {
-    conection.execute(`UPDATE StoreManager.sales_products SET 
+    connection.execute(`UPDATE StoreManager.sales_products SET 
     product_id = ?, quantity = ? WHERE sale_id = ? AND product_id = ?`, 
     [productId, quantity, id, productId]);
 };
 
-module.exports = { getAll, getById, addNewSaleId, addNewProductSold, update };
+const deleteById = (id) => {
+    connection.execute(`DELETE FROM StoreManager.sales_products
+    WHERE sale_id = ?;
+    `, [id]); 
+    connection.execute('DELETE FROM StoreManager.sales WHERE id = ?', [id]);
+};
+
+module.exports = { getAll, getById, addNewSaleId, addNewProductSold, update, deleteById };
