@@ -12,6 +12,7 @@ const {
   getProductsController,
   getProductsIdController,
   putProductsController,
+  deleteProductsController,
 } = require('./controllers/productsController');
 
 // não remova esse endpoint, é para o avaliador funcionar
@@ -23,6 +24,7 @@ app.get('/products', getProductsController);
 app.get('/products/:id', getProductsIdController);
 app.post('/products', validationProductsMiddleware, postProductsController);
 app.put('/products/:id', validationProductsMiddleware, putProductsController);
+app.delete('/products/:id', deleteProductsController);
 // app.use(productsRouter);
 // app.use(salesRouter);
 app.get('/sales', getSalesController);

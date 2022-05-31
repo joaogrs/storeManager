@@ -31,4 +31,8 @@ const uptate = async (id, { name, quantity }) => {
     return { id, name, quantity };
 };
 
-module.exports = { getAll, add, uptate };
+const deleteById = async (id) => {
+    await productsModel.deleteById(id);
+};
+
+module.exports = { getAll, add, uptate, deleteById };
