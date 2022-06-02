@@ -1,6 +1,6 @@
 const productsModel = require('../models/productsModel');
 
-const getAll = (id = null) => {
+const getAll = async (id = null) => {
     if (id) {
         return productsModel.getById(id);
     }
@@ -15,6 +15,7 @@ const isValid = async (name) => {
 };
 
 const add = async ({ name, quantity }) => {
+    if (!name || !quantity) return false;
     const [data] = await productsModel.getAll();
     const verifyName = await isValid(name);
     if (!verifyName) return false;

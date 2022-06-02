@@ -15,10 +15,9 @@ const addNewSaleId = async () => {
     return insertId;
 };
 
-const addNewProductSold = (id, { productId, quantity }) => {
-    connection.execute(`INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
-    VALUES (?, ?, ?)`, [id, productId, quantity]);
-};
+const addNewProductSold = (id, { productId, quantity }) => connection
+.execute(`INSERT INTO StoreManager.sales_products (sale_id, product_id,
+    quantity) VALUES (?, ?, ?)`, [id, productId, quantity]);
 
 const update = (id, productId, quantity) => {
     connection.execute(`UPDATE StoreManager.sales_products SET 
