@@ -7,5 +7,5 @@ const connection = mysql.createPool({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE || 'StoreManager',
 });
-
+// kk
 module.exports = connection;
