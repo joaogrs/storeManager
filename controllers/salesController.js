@@ -26,7 +26,6 @@ const putSalesController = async (req, res) => {
     try {
         const [data] = await salesService.getAll(id);
         if (data.length === 0) {
-            console.log('eroooou');
             throw Error;
         }
         const updatedObject = await salesService.update(id, req.body);

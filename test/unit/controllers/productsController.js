@@ -104,6 +104,40 @@ describe("Ao fazer um post na rota products quando o produto já existe", async 
   });
 });
 
+describe("testa a getById da productsController quando o id não existe", () => {
+  const res = {};
+  const req = {params: {id: 4}};
+
+  before(() => {
+    req.body = {};
+    const msgNotFound = { message: 'Product not found' }
+
+    res.status = sinon.stub()
+      .returns(res);
+    res.json = sinon.stub()
+      .returns(msgNotFound);
+
+    sinon.stub(productsService, 'getAll')
+      .resolves([[]]);
+  })
+
+  after(() => {
+    productsService.getAll.restore();
+  });
+
+  it('é chamado o método status passando o código 404', async () => {
+    await productsController.getProductsIdController(req, res);
+
+    expect(res.status.calledWith(404)).to.be.equal(true);
+  })
+
+  it('é chamado o método "json" passando um objeto', async () => {
+    await productsController.getProductsIdController (req, res);
+
+    expect(res.json.calledWith(sinon.match.object)).to.be.equal(true);
+  })
+})
+
 describe("quando é inserido com sucesso", async () => {
   const response = {};
   const request = {};
