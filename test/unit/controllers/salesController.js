@@ -3,7 +3,7 @@ const { expect } = require("chai");
 
 const salesService = require("../../../services/salesService");
 const salesController = require("../../../controllers/salesController");
-
+// oi
 describe('Ao chamar o controller de getAll', () => {
   describe('quando não existem produtos no banco de dados', async () => {
     const res = {};
