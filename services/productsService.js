@@ -36,4 +36,4 @@ const deleteById = async (id) => {
     await productsModel.deleteById(id);
 };
 
-module.exports = { getAll, add, uptate, deleteById };
+module.exports = { getAll, add, uptate, deleteById, isValid };

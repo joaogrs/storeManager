@@ -136,3 +136,47 @@ describe("Insere um novo produto no BD", () => {
     });
   });
 });
+
+describe('ao atualizar um produto', async () => {
+  const payloadProduct = {name:'Espada do Arthur', quantity: 4}
+  
+  before(() => {
+    sinon.stub(productsModel, 'uptade')
+      .resolves([[]]);
+  });
+
+  after(() => {
+    productsModel.uptade.restore();
+  });
+
+  it('retorna um obejto', async () => {
+    const response = await productsService.uptate(1, payloadProduct);
+
+    expect(response).to.be.an('object');
+  });
+
+  it('tal objeto possui o "id", "name" e "quantity" do produto alterado', async () => {
+    const response = await productsService.uptate(1, payloadProduct);
+
+    expect(response).to.include.all.keys("id", "name", "quantity");
+  });
+});
+
+describe('testa a função isValid', async () => {
+  const name = 'Jão'
+
+  before(() => {
+    sinon.stub(productsModel, 'getAll')
+      .resolves([[]]);
+  });
+
+  after(() => {
+    productsModel.getAll.restore();
+  });
+
+  it('Se espera que retorne verdadeiro quando o produto não está cadastrado no banco', async () => {
+    const response = await productsService.isValid(name)
+    
+    expect(response).to.be.equal(true);
+  })
+})

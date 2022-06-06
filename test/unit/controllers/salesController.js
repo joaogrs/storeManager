@@ -150,3 +150,37 @@ describe("quando é inserido com sucesso", async () => {
     expect(response.json.calledWith(sinon.match.object)).to.be.equal(true);
   });
 });
+
+describe("testa a rota put da salesController quando não existe nenhum produto cadastrado", () => {
+  const res = {};
+  const req = {params: {id: 4}};
+
+  before(() => {
+    req.body = {};
+    const msgNotFound = { message: 'Sale not found' }
+
+    res.status = sinon.stub()
+      .returns(res);
+    res.json = sinon.stub()
+      .returns(msgNotFound);
+
+    sinon.stub(salesService, 'getAll')
+      .resolves([[]]);
+  })
+
+  after(() => {
+    salesService.getAll.restore();
+  });
+
+  it('é chamado o método status passando o código 404', async () => {
+    await salesController.putSalesController(req, res);
+
+    expect(res.status.calledWith(404)).to.be.equal(true);
+  })
+
+  it('é chamado o método "json" passando um objeto', async () => {
+    await salesController.putSalesController (req, res);
+
+    expect(res.json.calledWith(sinon.match.object)).to.be.equal(true);
+  })
+})
