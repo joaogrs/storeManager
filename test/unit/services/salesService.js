@@ -97,6 +97,8 @@ describe("Insere uma nova venda no BD", () => {
       salesModel.addNewProductSold.restore()
     });
 
+    //oi
+
     it("retorna um objeto", async () => {
       const response = await salesService.add(payloadSale);
 
