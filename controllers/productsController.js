@@ -2,7 +2,6 @@ const productsService = require('../services/productsService');
 
 const getProductsController = async (req, res) => {
     const [data] = await productsService.getAll();
-    console.log(data);
     return res.status(200).json(data);
 };
 
@@ -25,7 +24,6 @@ const postProductsController = async (req, res) => {
     if (!objectAdded) {
         return res.status(409).json({ message: 'Product already exists' });
     }
-    console.log(objectAdded);
     return res.status(201).json(objectAdded);
 };
 

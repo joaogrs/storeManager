@@ -1,4 +1,5 @@
 const salesModel = require('../models/salesModel');
+const { modifyQuantityProduct, deleteSale } = require('../helpers/modifyQuantityProduct');
 
 const getAll = (id = null) => {
     if (id) {
@@ -11,13 +12,16 @@ const add = async (arrayForPost) => {
     const newId = await salesModel.addNewSaleId();
     
     const promisePostObjects = [];
+    const promiseModifyQuantity = [];
     const itemsSold = [];
      arrayForPost.forEach((sale) => {
         const { productId, quantity } = sale;
         promisePostObjects.push(salesModel.addNewProductSold(newId, { productId, quantity }));
+        promiseModifyQuantity.push(modifyQuantityProduct(productId, quantity));
         return itemsSold.push({ productId, quantity });
     });
     await Promise.all(promisePostObjects);
+    await Promise.all(promiseModifyQuantity);
     return { id: newId, itemsSold };
 };
 
@@ -35,6 +39,7 @@ const update = async (id, arrayForUpdate) => {
 
 const deleteById = async (id) => {
     await salesModel.deleteById(id);
+    await deleteSale(id);
 };
 
 module.exports = { getAll, add, update, deleteById };

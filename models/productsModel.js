@@ -12,8 +12,11 @@ const add = ({ name, quantity }) => conect.execute(`INSERT INTO StoreManager.pro
 const uptade = (id, { name, quantity }) => conect.execute(`UPDATE StoreManager.products SET 
 name = ?, quantity = ? WHERE id = ?`, [name, quantity, id]);
 
+const uptadeQuantity = (id, quantity) => conect.execute(`UPDATE StoreManager.products SET
+quantity= ? WHERE id= ?`, [quantity, id]);
+
 const deleteById = (id) => conect.execute(`DELETE FROM StoreManager.products
 WHERE id = ?;
 `, [id]);
 
-module.exports = { getAll, getById, add, uptade, deleteById };
+module.exports = { getAll, getById, add, uptade, deleteById, uptadeQuantity };
