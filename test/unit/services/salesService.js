@@ -2,6 +2,7 @@ const sinon = require("sinon");
 const { expect } = require("chai");
 
 const salesModel = require("../../../models/salesModel");
+const productsModel = require("../../../models/productsModel")
 const salesService = require("../../../services/salesService");
 const helpers = require("../../../helpers/modifyQuantityProduct");
 
@@ -89,14 +90,24 @@ describe("Insere uma nova venda no BD", () => {
         "productId": 1,
         "quantity": 3
       }
+      
+      const returnGetAll = [[{
+        "id": 1,
+        "name": "Martelo de Thor",
+        "quantity": 10
+    }]]
       sinon.stub(salesModel, "addNewSaleId").returns(4);
       sinon.stub(salesModel, "addNewProductSold").returns(returnAddProduct)
+      sinon.stub(productsModel, "getAll").returns(returnGetAll)
+      sinon.stub(productsModel, 'uptadeQuantity').resolves()
       sinon.stub(helpers, "modifyQuantityProduct").resolves();
     });
 
     after(() => {
       salesModel.addNewSaleId.restore();
       salesModel.addNewProductSold.restore();
+      productsModel.getAll.restore();
+      productsModel.uptadeQuantity.restore()
       helpers.modifyQuantityProduct.restore();
     });
 
