@@ -3,6 +3,7 @@ const { expect } = require("chai");
 
 const salesModel = require("../../../models/salesModel");
 const salesService = require("../../../services/salesService");
+const helpers = require("../../../helpers/modifyQuantityProduct");
 
 describe('Busca todas as vendas na DB', () => {
     describe('quando não existe nenhuma venda efetuada', async () => {
@@ -90,14 +91,14 @@ describe("Insere uma nova venda no BD", () => {
       }
       sinon.stub(salesModel, "addNewSaleId").returns(4);
       sinon.stub(salesModel, "addNewProductSold").returns(returnAddProduct)
+      sinon.stub(helpers, "modifyQuantityProduct").resolves();
     });
 
     after(() => {
       salesModel.addNewSaleId.restore();
-      salesModel.addNewProductSold.restore()
+      salesModel.addNewProductSold.restore();
+      helpers.modifyQuantityProduct.restore();
     });
-
-    //oi
 
     it("retorna um objeto", async () => {
       const response = await salesService.add(payloadSale);
