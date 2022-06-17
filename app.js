@@ -10,7 +10,8 @@ const {
   deleteSalesController,
 } = require('./controllers/salesController');
 const { validationProductsMiddleware } = require('./middlewares/products.middleware');
-const { validationSalesMiddleware } = require('./middlewares/sales.middleware');
+const { validationSalesMiddleware, validationProductQuantity,
+} = require('./middlewares/sales.middleware');
 const {
   postProductsController,
   getProductsController,
@@ -33,7 +34,7 @@ app.delete('/products/:id', deleteProductsController);
 // app.use(salesRouter);
 app.get('/sales', getSalesController);
 app.get('/sales/:id', getSalesByIdController);
-app.post('/sales', validationSalesMiddleware, postSalesController);
+app.post('/sales', validationSalesMiddleware, validationProductQuantity, postSalesController);
 app.put('/sales/:id', validationSalesMiddleware, putSalesController);
 app.delete('/sales/:id', deleteSalesController);
 

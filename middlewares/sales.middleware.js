@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const productsModel = require('../models/productsModel');
 
 const salesDTO = Joi.array().items({
     productId: Joi.number().required(),
@@ -17,4 +18,21 @@ const validationSalesMiddleware = (req, res, next) => {
     return res.status(400).json(message);
 };
 
-module.exports = { validationSalesMiddleware };
+const validationProductQuantity = async (req, res, next) => {
+    const [allProducts] = await productsModel.getAll();
+    let test = false;
+    req.body.forEach((sale) => {
+        const message = { message: 'Such amount is not permitted to sell' };
+        const { productId, quantity: quantitySale } = sale;
+        const productFinded = allProducts.find((p) => p.id === productId);
+        const { quantity } = productFinded;
+        const total = quantity - quantitySale;
+        if (total < 0) {
+            test = true;
+            return res.status(422).json(message);
+        }
+    });
+    if (!test) return next();
+};
+
+module.exports = { validationSalesMiddleware, validationProductQuantity };
